@@ -13,13 +13,22 @@ You can remove 3 from the array to get the strictly increasing sequence [1, 2]. 
 """
 
 
-
-def almostIncreasingSequence(sequence):    
-    c = 0
-    for i in range(len(sequence)-1):
-        if sequence[i] >= sequence[i+1]: c += 1
-        if i+2 < len(sequence) and sequence[i] >= sequence[i+2]: c += 1
-    return c < 3
+def almostIncreasingSequence(sequence):
+    droppped = False
+    last = prev = min(sequence) - 1
+    for elm in sequence:
+        if elm <= last:
+            if droppped:
+                return False
+            else:
+                droppped = True
+            if elm <= prev:
+                prev = last
+            elif elm >= prev:
+                prev = last = elm
+        else:
+            prev, last = last, elm
+    return True
     # return bool(len([i for i in range(len(sequence)-1) if (not sequence[i]<sequence[i+1]) or (len(sequence)!=len(list(set(sequence))))])== 1)
 
 
