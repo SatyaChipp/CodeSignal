@@ -24,8 +24,14 @@ Return true if strings follows patterns and false otherwise.
 """
 
 def areFollowingPatterns(strings, patterns):
-    check1 = ['yes' if strings[i] == strings[j] and patterns[i] != patterns[j] else 'no' for i in range(len(strings)) for j in range(len(strings)) ]
-    check2 = ['yes' if strings[i] != strings[j] and patterns[i] == patterns[j] else 'no' for i in range(len(strings)) for j in range(len(strings)) ]
-    
-    return all(i=='no' for i in (check1+check2))
+    check1 = [ True if (strings[i] == strings[j] and patterns[i] != patterns[j]) or 
+              (strings[i] != strings[j] and patterns[i] == patterns[j]) else False for i in range(len(strings)) 
+              for j in range(len(strings)) ]
+    print(check1)
+    return all(i==False for i in check1)
+
+--------------------------------------------------------------------------------------------
+def areFollowingPatterns(strings, patterns):
+    return len(set(strings)) == len(set(patterns)) == len(set(zip(strings, patterns)))
+
 
